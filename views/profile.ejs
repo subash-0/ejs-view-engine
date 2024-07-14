@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="flex justify-center items-center flex-col my-10">
+    <div class="flex flex-col justify-center my-6  p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-50 dark:text-gray-800">
+        <img src="https://images.pexels.com/photos/2554092/pexels-photo-2554092.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square">
+        <div class="space-y-4 text-center divide-y dark:divide-gray-300">
+            <div class="my-2 space-y-1">
+                <h2 class="text-xl font-semibold sm:text-2xl"><%=user.name %></h2>
+                <p class="px-5 text-xs sm:text-base dark:text-gray-600"><%=user.username %></p>
+            </div>
+            <div class="flex justify-center pt-2 space-x-4 align-center">
+             <a href="/logout" class="bg-red-700 text-white font-semibold text-xl px-4 rounded-md py-1">Log Out</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- component -->
+<div class="heading text-center font-bold text-2xl m-5 text-gray-800">New Post</div>
+
+  <form action="/post" method="post" class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+    <input class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" spellcheck="false" placeholder="Title" type="text"  name="title" id="title" required/>
+    <textarea class="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellcheck="false" placeholder="Describe everything about this post here" id="content" name="content" required></textarea>
+    
+    
+    <div class="buttons flex py-2">
+      <button type="submit" class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">Post</button>
+    </div>
+  </form>
+
+
+
+
+
+<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white w-full dark:bg-gray-900 antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl gap-4 flex-wrap sm:flex-nowrap">
+        <% user.posts.forEach((post)=>{ %>
+            <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+                <header class="mb-4 lg:mb-6 not-format">
+                    <address class="flex items-center mb-6 not-italic">
+                        <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                            <img class="mr-4 w-16 h-16 rounded-full" src="https://static.vecteezy.com/system/resources/previews/002/387/693/non_2x/user-profile-icon-free-vector.jpg" alt="Jese Leos">
+                            <div>
+                                <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white"><%=user.name %> </a>
+                                <p class="text-base text-gray-500 dark:text-gray-400">Web developer & Learner</p>
+                                <p class="text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="2022-02-08" title="February 8th, 2022"><%= post.date%></time></p>
+                            </div>
+                        </div>
+                    </address>
+                    <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white"><%=post.title%></h1>
+                </header>
+                <p class="lead"><%=post.content%></p>
+                <div class="flex justify-evenly">
+                  <div class="flex justify-center items-center gap-2">
+                    <span class="text-sm mr-4 text-green-700 font-semibold"><%=post.likes.length%> Likes</span>
+                 
+                    <a href="/like/<%=post._id%>" class="my-3 block">
+                        <button type="button" class="text-whiterounded-lg text-sm font-bold border border-2 rounded-md px-5 hover:text-red-700">
+                          <%= post.likes.indexOf(user._id)===-1?"Like":"Unlike"%>
+                          </button>
+                          </a>  
+                        </div>
+                        <%= post.user.indexOf(user._id)===-1?"Update":""%>
+                          <a href="/edit/<%=post._id%>" class="my-3 block">
+                            <button type="button" class="text-whiterounded-lg text-sm  p-1 hover:text-green-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                              </svg>
+                              
+                          </button>
+                          </a>
+                        
+                </div>
+               
+
+         </article>
+       <% }) %>
+      
+     </div>
+     </main>
+     </div>
+    </div>
+</body>
+</html>
